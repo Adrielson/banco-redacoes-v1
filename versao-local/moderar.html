@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moderar Redação - Painel Admin</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+
+        <!-- ===== NAVEGAÇÃO ===== -->
+        <nav class="topo-nav">
+            <a href="admin.html">Voltar ao painel</a>
+        </nav>
+
+        <!-- ===== CABEÇALHO ===== -->
+        <header>
+            <h1>Moderar Redação</h1>
+            <p>Leia o texto com atenção e escolha aprovar ou recusar</p>
+        </header>
+
+        <!-- ===== MENSAGENS (texto inserido pelo moderar.js) ===== -->
+        <div id="mensagem-sucesso" class="mensagem-sucesso oculto"></div>
+        <div id="mensagem-erro" class="mensagem-erro oculto"></div>
+
+        <!-- ===== CONTEÚDO: redação de EXEMPLO (o moderar.js troca pela redação do ?id= da URL) ===== -->
+        <main id="conteudo-moderacao">
+            <section class="leitura-bloco">
+                <h2>Cultura para quem?</h2>
+                <p class="meta">Tema: Democratização do acesso à cultura</p>
+                <p class="meta">Candidato: <strong>Ana Costa</strong> • Matrícula 2023-089</p>
+                <p class="meta">Status atual: <span class="status-aguardando">Aguardando aprovação</span></p>
+                <div class="leitura-texto">O acesso à cultura no Brasil ainda é privilégio de poucos...
+
+Logo, políticas públicas são essenciais.</div>
+            </section>
+
+            <div class="botoes-moderacao">
+                <button type="button" class="aprovar" id="btn-aprovar">Aprovar e Publicar</button>
+                <button type="button" class="recusar" id="btn-recusar">Recusar</button>
+            </div>
+        </main>
+
+        <!-- ===== RODAPÉ DO PAINEL ===== -->
+        <footer>
+            <p>© 2026 Banco de Redações CEJOL - Painel Administrativo</p>
+            <p>contato@bancoredacoes.com</p>
+        </footer>
+
+    </div>
+
+</body>
+</html>

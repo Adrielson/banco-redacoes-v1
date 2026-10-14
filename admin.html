@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel do Administrador - Banco de Redações CEJOL</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ============================================ -->
+    <!-- CAMADA 1: TELA DE LOGIN (aparece primeiro)   -->
+    <!-- ============================================ -->
+    <div id="login-overlay">
+        <div class="login-box">
+            <h2>Área Restrita</h2>
+            <p>Digite a senha de administrador para continuar</p>
+            <form id="form-login">
+                <input type="password" id="senha-admin" placeholder="Digite a senha" autocomplete="current-password">
+                <button type="submit">Entrar</button>
+            </form>
+            <p id="login-erro" class="login-erro oculto">Senha incorreta. Tente novamente.</p>
+            <p><a href="index.html" class="link-voltar-publico">Voltar ao site público</a></p>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- CAMADA 2: PAINEL (começa oculto)             -->
+    <!-- ============================================ -->
+    <div id="painel-admin" class="container oculto">
+
+        <!-- ===== NAVEGAÇÃO ===== -->
+        <nav class="topo-nav">
+            <a href="index.html">Ir para o site público</a>
+            <a href="#" id="btn-sair" class="link-sair">Sair</a>
+        </nav>
+
+        <!-- ===== CABEÇALHO ===== -->
+        <header>
+            <h1>Painel do Administrador</h1>
+            <p>Modere, edite e comente as redações enviadas</p>
+        </header>
+
+        <!-- ===== ESTATÍSTICAS (preenchidas pelo admin.js) ===== -->
+        <section id="estatisticas">
+            <span>Total: <strong id="total-redacoes">3</strong></span>
+            <span>Aprovadas: <strong id="total-aprovadas">1</strong></span>
+            <span>Aguardando aprovação: <strong id="total-aguardando">1</strong></span>
+            <span>Recusadas: <strong id="total-recusadas">1</strong></span>
+        </section>
+
+        <!-- ===== MENSAGENS (texto inserido pelo admin.js) ===== -->
+        <div id="mensagem-sucesso" class="mensagem-sucesso oculto"></div>
+        <div id="mensagem-erro" class="mensagem-erro oculto"></div>
+
+        <!-- ===== MODERAÇÃO ===== -->
+        <section id="moderacao">
+            <h2>⏳ Aguardando Aprovação</h2>
+            <p class="texto-ajuda">Revise as redações enviadas pelos candidatos e aprove ou recuse.</p>
+            <!-- Card de EXEMPLO (o admin.js troca pelas redações "aguardando" da API) -->
+            <div id="lista-moderacao">
+                <article class="redacao">
+                    <h3>Cultura para quem?</h3>
+                    <p>Tema: Democratização do acesso à cultura</p>
+                    <p>Candidato: Ana Costa</p>
+                    <p>Matrícula: 2023-089</p>
+                    <p>Status: <span class="status-aguardando">Aguardando aprovação</span></p>
+                    <div class="botoes-redacao">
+                        <a href="moderar.html?id=3" class="ler">Ler e moderar</a>
+                        <button type="button" class="aprovar">Aprovar</button>
+                        <button type="button" class="recusar">Recusar</button>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- ===== TODAS AS REDAÇÕES ===== -->
+        <section id="listagem">
+            <h2>Todas as Redações</h2>
+            <!-- Cards de EXEMPLO (o admin.js troca por todas as redações da API) -->
+            <div id="lista-redacoes">
+                <article class="redacao">
+                    <h3>Conectados, mas desiguais</h3>
+                    <p>Tema: Desafios da educação digital no Brasil</p>
+                    <p>Candidato: Maria Silva</p>
+                    <p>Matrícula: 2023-001</p>
+                    <p>Status: <span class="status-aprovada">Aprovada</span></p>
+                    <div class="botoes-redacao">
+                        <a href="moderar.html?id=1" class="ler">Ler</a>
+                        <button type="button" class="editar">Editar</button>
+                        <button type="button" class="comentar">Comentar</button>
+                        <button type="button" class="excluir">Excluir</button>
+                    </div>
+                </article>
+
+                <article class="redacao">
+                    <h3>Cultura para quem?</h3>
+                    <p>Tema: Democratização do acesso à cultura</p>
+                    <p>Candidato: Ana Costa</p>
+                    <p>Matrícula: 2023-089</p>
+                    <p>Status: <span class="status-aguardando">Aguardando aprovação</span></p>
+                    <div class="botoes-redacao">
+                        <a href="moderar.html?id=3" class="ler">Ler</a>
+                        <button type="button" class="editar">Editar</button>
+                        <button type="button" class="comentar">Comentar</button>
+                        <button type="button" class="excluir">Excluir</button>
+                    </div>
+                </article>
+
+                <article class="redacao">
+                    <h3>O trânsito que nos paralisa</h3>
+                    <p>Tema: Mobilidade urbana nas grandes cidades</p>
+                    <p>Candidato: Pedro Lima</p>
+                    <p>Matrícula: 2023-150</p>
+                    <p>Status: <span class="status-recusada">Recusada</span></p>
+                    <div class="botoes-redacao">
+                        <a href="moderar.html?id=4" class="ler">Ler</a>
+                        <button type="button" class="editar">Editar</button>
+                        <button type="button" class="comentar">Comentar</button>
+                        <button type="button" class="excluir">Excluir</button>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- ===== ADICIONAR ===== -->
+        <section id="adicionar" class="caixa-formulario">
+            <h2>Adicionar Redação Manualmente</h2>
+            <form id="form-adicionar">
+                <div class="campo">
+                    <label for="tema">Tema da Redação *</label>
+                    <input type="text" id="tema" placeholder="Digite o tema" required>
+                </div>
+
+                <div class="campo">
+                    <label for="candidato">Candidato *</label>
+                    <input type="text" id="candidato" placeholder="Digite o nome do candidato" required>
+                </div>
+
+                <div class="campo">
+                    <label for="matricula">Matrícula</label>
+                    <input type="text" id="matricula" placeholder="Ex: 2024-12345">
+                </div>
+
+                <div class="campo">
+                    <label for="status">Status *</label>
+                    <select id="status" required>
+                        <option value="aguardando">Aguardando aprovação</option>
+                        <option value="aprovada">Aprovada</option>
+                        <option value="recusada">Recusada</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="titulo">Título da Redação *</label>
+                    <input type="text" id="titulo" placeholder="Cole ou digite aqui o título da sua redação..." required>
+                </div>
+
+                <div class="campo">
+                    <label for="texto">Texto da Redação *</label>
+                    <textarea id="texto" placeholder="Digite o texto completo da redação..." required></textarea>
+                </div>
+
+                <button type="submit">Salvar Redação</button>
+                <button type="reset">Limpar Campos</button>
+            </form>
+        </section>
+
+        <!-- ===== EDITAR (aparece ao clicar em "Editar") ===== -->
+        <section id="editar" class="caixa-formulario oculto">
+            <h2>Editar Redação</h2>
+            <form id="form-editar">
+                <input type="hidden" id="editar-id">
+
+                <div class="campo">
+                    <label for="editar-tema">Tema</label>
+                    <input type="text" id="editar-tema">
+                </div>
+
+                <div class="campo">
+                    <label for="editar-candidato">Candidato</label>
+                    <input type="text" id="editar-candidato">
+                </div>
+
+                <div class="campo">
+                    <label for="editar-matricula">Matrícula</label>
+                    <input type="text" id="editar-matricula">
+                </div>
+
+                <div class="campo">
+                    <label for="editar-status">Status</label>
+                    <select id="editar-status">
+                        <option value="aguardando">Aguardando aprovação</option>
+                        <option value="aprovada">Aprovada</option>
+                        <option value="recusada">Recusada</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="editar-titulo">Título da Redação</label>
+                    <input type="text" id="editar-titulo">
+                </div>
+
+                <div class="campo">
+                    <label for="editar-texto">Texto da Redação</label>
+                    <textarea id="editar-texto"></textarea>
+                </div>
+
+                <button type="submit">Atualizar Redação</button>
+                <button type="button" id="cancelar-edicao">Cancelar</button>
+            </form>
+        </section>
+
+        <!-- ===== RODAPÉ DO PAINEL ===== -->
+        <footer>
+            <p>© 2026 Banco de Redações CEJOL - Painel Administrativo</p>
+            <p>contato@bancoredacoes.com</p>
+        </footer>
+
+    </div>
+
+    <!-- ============================================ -->
+    <!-- CAMADA 3: MODAL DE COMENTÁRIO (fora do painel) -->
+    <!-- ============================================ -->
+    <div id="modal-comentario" class="oculto">
+        <div class="login-box">
+            <h2>Adicionar Comentário</h2>
+            <p>Comentário para: <strong id="comentario-redacao-titulo">Cultura para quem?</strong></p>
+            <form id="form-comentario">
+                <input type="hidden" id="comentario-redacao-id">
+
+                <div class="campo">
+                    <label for="comentario-autor">Seu nome (professor revisor) *</label>
+                    <input type="text" id="comentario-autor" placeholder="Ex: Prof. Carlos" required>
+                </div>
+
+                <div class="campo">
+                    <label for="comentario-texto">Comentário *</label>
+                    <textarea id="comentario-texto" placeholder="Escreva seu comentário sobre a redação..." required></textarea>
+                </div>
+
+                <button type="submit">Salvar Comentário</button>
+                <button type="button" id="cancelar-comentario">Cancelar</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>

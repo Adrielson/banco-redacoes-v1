@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banco de Redações CEJOL</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+
+        <!-- ===== NAVEGAÇÃO ===== -->
+        <nav class="topo-nav">
+            <a href="index.html">Início</a>
+            <a href="enviar.html" class="btn-enviar">Enviar minha redação</a>
+        </nav>
+
+        <!-- ===== CABEÇALHO ===== -->
+        <header>
+            <h1>Banco de Redações CEJOL</h1>
+            <p>Consulte redações aprovadas e inspire-se para a sua próxima prova</p>
+        </header>
+
+        <!-- ===== ESTATÍSTICAS (preenchida pelo publico.js) ===== -->
+        <section id="estatisticas">
+            <span><strong id="total-publicadas">2</strong> redações publicadas</span>
+        </section>
+
+        <!-- ===== CONTEÚDO PRINCIPAL ===== -->
+        <main>
+
+            <!-- Busca -->
+            <section id="busca">
+                <h2>Buscar Redações</h2>
+                <form id="form-busca">
+                    <input type="text" id="termo-busca" placeholder="Digite o título, o tema ou o nome do candidato...">
+                    <button type="submit">Buscar</button>
+                    <button type="button" id="limpar-busca">Limpar</button>
+                </form>
+            </section>
+
+            <!-- Listagem: cards de EXEMPLO (o publico.js troca pelos dados da API) -->
+            <section id="listagem">
+                <h2>Redações Publicadas</h2>
+                <div id="lista-redacoes">
+                    <article class="redacao">
+                        <h3>Conectados, mas desiguais</h3>
+                        <p>Tema: Desafios da educação digital no Brasil</p>
+                        <p>Candidato: Maria Silva</p>
+                        <div class="botoes-redacao">
+                            <a href="redacao.html?id=1" class="ler">Ler redação</a>
+                        </div>
+                    </article>
+
+                    <article class="redacao">
+                        <h3>A verdade em tempos de algoritmo</h3>
+                        <p>Tema: Caminhos para combater a desinformação</p>
+                        <p>Candidato: João Souza</p>
+                        <div class="botoes-redacao">
+                            <a href="redacao.html?id=2" class="ler">Ler redação</a>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- ===== RODAPÉ ===== -->
+        <footer>
+            <p>© 2026 Banco de Redações CEJOL - Desenvolvido para aprendizado</p>
+            <p>contato@bancoredacoes.com</p>
+            <p class="link-admin"><a href="admin.html" class="link-admin-texto">Área do administrador</a></p>
+        </footer>
+
+    </div>
+
+    <script src="dados.js"></script>
+    <script src="publico.js"></script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enviar Redação - Banco de Redações CEJOL</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+
+        <!-- ===== NAVEGAÇÃO ===== -->
+        <nav class="topo-nav">
+            <a href="index.html">Voltar para a lista</a>
+        </nav>
+
+        <!-- ===== CABEÇALHO ===== -->
+        <header>
+            <h1>Envie sua Redação</h1>
+            <p>Compartilhe sua redação com o banco e ajude outros estudantes</p>
+        </header>
+
+        <!-- ===== MENSAGENS (o enviar.js remove a classe oculto da mensagem certa) ===== -->
+        <div id="mensagem-sucesso" class="mensagem-sucesso oculto">
+            Sua redação foi enviada com sucesso! Ela passará por avaliação e, se aprovada, será publicada no banco de redações.
+        </div>
+        <div id="mensagem-erro" class="mensagem-erro oculto">
+            Não foi possível enviar sua redação. Verifique os campos e tente novamente.
+        </div>
+
+        <!-- ===== FORMULÁRIO ===== -->
+        <section id="form-enviar" class="caixa-formulario">
+            <h2>Dados da Redação</h2>
+            <form id="formulario-envio">
+                <div class="campo">
+                    <label for="tema">Tema da Redação *</label>
+                    <input type="text" id="tema" placeholder="Ex: Desafios da educação digital no Brasil" required>
+                </div>
+
+                <div class="campo">
+                    <label for="candidato">Seu Nome Completo *</label>
+                    <input type="text" id="candidato" placeholder="Digite seu nome completo" required>
+                </div>
+
+                <div class="campo">
+                    <label for="matricula">Matrícula *</label>
+                    <input type="text" id="matricula" placeholder="Ex: 2024-12345" required>
+                </div>
+
+                <div class="campo">
+                    <label for="titulo">Título da Redação *</label>
+                    <input type="text" id="titulo" placeholder="Cole ou digite aqui o título da sua redação..." required>
+                </div>
+
+                <div class="campo">
+                    <label for="texto">Texto da Redação *</label>
+                    <textarea id="texto" placeholder="Cole ou digite aqui o texto completo da sua redação..." required></textarea>
+                </div>
+
+                <button type="submit">Enviar Redação</button>
+                <button type="reset">Limpar Campos</button>
+            </form>
+        </section>
+
+        <!-- ===== ORIENTAÇÕES ===== -->
+        <section id="orientacoes">
+            <h3>Antes de enviar</h3>
+            <ul>
+                <li>Confira se o texto está completo e sem erros de digitação.</li>
+                <li>Use o formato dissertativo-argumentativo do ENEM.</li>
+                <li>Redações com conteúdo ofensivo ou plágio serão recusadas.</li>
+                <li>Após o envio, sua redação entrará em <strong>moderação</strong>.</li>
+                <li>Se aprovada, ela aparecerá publicamente no banco de redações.</li>
+                <li>Na página pública aparecem só o seu nome e a redação; a matrícula fica visível apenas para os professores.</li>
+            </ul>
+        </section>
+
+        <!-- ===== RODAPÉ ===== -->
+        <footer>
+            <p>© 2026 Banco de Redações CEJOL - Desenvolvido para aprendizado</p>
+            <p>contato@bancoredacoes.com</p>
+            <p class="link-admin"><a href="admin.html" class="link-admin-texto">Área do administrador</a></p>
+        </footer>
+
+    </div>
+
+</body>
+</html>

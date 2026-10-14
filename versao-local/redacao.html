@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ler Redação - Banco de Redações CEJOL</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+
+        <!-- ===== NAVEGAÇÃO ===== -->
+        <nav class="topo-nav">
+            <a href="index.html" id="link-voltar">Voltar para a lista</a>
+            <a href="enviar.html" class="btn-enviar">Enviar minha redação</a>
+        </nav>
+
+        <!-- ===== CABEÇALHO ===== -->
+        <header>
+            <h1>Redação Completa</h1>
+            <p>Leia o texto e confira os comentários dos professores revisores</p>
+        </header>
+
+        <!-- ===== MENSAGEM DE ERRO (o publico.js remove a classe oculto se houver erro) ===== -->
+        <div id="mensagem-erro" class="mensagem-erro oculto">
+            Não foi possível carregar a redação. Verifique o link ou tente novamente.
+        </div>
+
+        <!-- ===== CONTEÚDO: redação de EXEMPLO (o publico.js troca pela redação do ?id= da URL) ===== -->
+        <main id="conteudo-redacao">
+            <section class="leitura-bloco">
+                <h2>Conectados, mas desiguais</h2>
+                <p class="meta">Tema: Desafios da educação digital no Brasil</p>
+                <p class="meta">Por <strong>Maria Silva</strong></p>
+                <!-- O texto fica sem recuo: o CSS (white-space: pre-wrap) mostra espaços e quebras de linha como estão -->
+                <div class="leitura-texto">A educação digital no Brasil enfrenta desafios históricos...
+
+Em primeiro lugar, a desigualdade de acesso à internet...
+
+Portanto, é fundamental que o Estado invista em infraestrutura.</div>
+            </section>
+
+            <section class="comentarios-bloco">
+                <h3>💬 Comentários dos professores</h3>
+                <div class="comentario">
+                    <span class="autor">Prof. Carlos</span>
+                    <span class="data">2026-05-10</span>
+                    <p class="texto">Boa argumentação, mas faltou repertório sociocultural.</p>
+                </div>
+            </section>
+        </main>
+
+        <!-- ===== RODAPÉ ===== -->
+        <footer>
+            <p>© 2026 Banco de Redações CEJOL - Desenvolvido para aprendizado</p>
+            <p>contato@bancoredacoes.com</p>
+            <p class="link-admin"><a href="admin.html" class="link-admin-texto">Área do administrador</a></p>
+        </footer>
+
+    </div>
+
+    <script src="dados.js"></script>
+    <script src="publico.js"></script>
+</body>
+</html>

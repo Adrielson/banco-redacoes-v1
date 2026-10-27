@@ -32,6 +32,7 @@ banco-redacoes-v1/
 ├── admin.js        ← JS do admin.html                    (Aulas 13 e 15)
 ├── moderar.js      ← JS do moderar.html                  (Aula 16)
 ├── api.py          ← API Flask, dados em memória         (Aula 14)
+├── requirements.txt ← os pacotes Python da API
 └── versao-local/   ← o projeto ANTES da API              (Aulas 12 e 13)
 ```
 
@@ -42,8 +43,10 @@ Você precisa do **Python 3** e do **VS Code** com a extensão **Live Server**.
 1. Instale os pacotes da API (uma vez só):
 
    ```bash
-   python -m pip install flask flask-cors
+   python -m pip install -r requirements.txt
    ```
+
+   O `requirements.txt` lista os pacotes de que a API precisa: `flask` e `flask-cors`.
 
 2. No terminal, **dentro da pasta do projeto**, ligue a API e deixe esse terminal aberto:
 
@@ -95,7 +98,7 @@ pronta para a internet:
 | O que acontece | Como resolver |
 | --- | --- |
 | A página mostra "Não foi possível carregar as redações" | a API está desligada: rode `python api.py` |
-| `ModuleNotFoundError: No module named 'flask'` | rode `python -m pip install flask flask-cors` |
+| `ModuleNotFoundError: No module named 'flask'` (ou `flask_cors`) | rode `python -m pip install -r requirements.txt`, dentro da pasta do projeto |
 | As redações que você criou sumiram | a API reiniciou; é o primeiro limite da tabela acima |
 | O `moderar.html` volta para o `admin.html` | faça o login no painel e abra a moderação **na mesma aba** |
 | No Mac, `localhost:5000` responde 403 | o AirPlay Receiver usa a porta 5000: desligue-o nos Ajustes do Sistema |

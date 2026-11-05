@@ -15,8 +15,8 @@ app.json.sort_keys = False     # campos na ordem em que foram escritos
 redacoes = [
     {
         "id": 1,
-        "tema": "Desafios da educação digital no Brasil",
-        "titulo": "Conectados, mas desiguais",
+        "tema": "Modelo dissertativo-argumentativo",
+        "titulo": "Modelo dissertativo-argumentativo",
         "candidato": "Maria Silva",
         "matricula": "2023-001",
         "status": "aprovada",
@@ -54,8 +54,8 @@ redacoes = [
     },
     {
         "id": 2,
-        "tema": "Caminhos para combater a desinformação",
-        "titulo": "A verdade em tempos de algoritmo",
+        "tema": "Desafios para democratizar o acesso à leitura no Brasil",
+        "titulo": "Desafios para democratizar o acesso à leitura no Brasil",
         "candidato": "João Souza",
         "matricula": "2022-114",
         "status": "aprovada",

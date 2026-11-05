@@ -40,6 +40,36 @@ banco-redacoes-v1/
 
 Você precisa do **Python 3** e do **VS Code** com a extensão **Live Server**.
 
+### Instalando o Python (uma vez só)
+
+**Windows**
+
+1. Baixe o Python em [python.org/downloads](https://www.python.org/downloads/) (botão amarelo
+   **Download Python**) e abra o arquivo baixado.
+2. Se aparecer a caixa **"Add python.exe to PATH"**, **marque-a antes de clicar em Install Now**.
+   Sem ela, o terminal não encontra o comando `python`. Se o instalador for o **Python install
+   manager**, aceite as opções padrão e responda **sim** quando ele perguntar se deve instalar o
+   Python e ajustar o PATH.
+3. **Feche e abra de novo** o VS Code (o terminal só enxerga o Python depois disso).
+4. No terminal, confira: `python --version` deve mostrar algo como `Python 3.14.0`.
+
+| O que acontece | Como resolver |
+| --- | --- |
+| Ao digitar `python`, abre a **Microsoft Store** | em **Configurações → Aplicativos → Configurações avançadas de aplicativos → Aliases de execução de aplicativo**, desligue os itens **python.exe** e **python3.exe**; depois, feche e abra o terminal |
+| `'python' não é reconhecido como um comando…` | teste `py --version`: se funcionar, use `py` no lugar de `python` (por exemplo, `py api.py`); se não, reinstale marcando **Add python.exe to PATH** |
+| Instalou, mas o comando continua sem funcionar | feche **todas** as janelas do VS Code e abra de novo (ou reinicie o computador) |
+
+**Mac:** baixe o instalador em [python.org/downloads](https://www.python.org/downloads/) e
+instale normalmente. No terminal, use `python3` no lugar de `python`.
+
+**Linux:** o Python normalmente já vem instalado (`python3 --version`). Se faltar o pip, no
+Ubuntu: `sudo apt install python3-pip`.
+
+**VS Code e Live Server:** baixe o VS Code em [code.visualstudio.com](https://code.visualstudio.com/)
+e, na aba **Extensões** (Ctrl+Shift+X), instale a extensão **Live Server**.
+
+### Rodando o projeto
+
 1. Instale os pacotes da API (uma vez só):
 
    ```bash

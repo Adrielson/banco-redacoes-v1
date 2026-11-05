@@ -820,10 +820,9 @@ select:focus-visible {
 
 /* ############ Teste: folha de redação ############ */
 
-/* ===== Leitura com aparência de folha de redação (só no redacao.html) =====
-   O <body> do redacao.html tem a classe "pagina-leitura"; por isso, o moderar.html
-   (que usa as mesmas classes) continua como antes.
-   Fontes do Google Fonts, ligadas no <head> do redacao.html:
+/* ===== Leitura com aparência de folha de redação (redacao.html e moderar.html) =====
+   Vale para as páginas cujo <body> tem a classe "pagina-leitura".
+   Fontes do Google Fonts, ligadas no <head> dessas duas páginas:
    - Dancing Script: o título, em letra cursiva;
    - Caveat: o texto, em letra de forma escrita à mão. */
 

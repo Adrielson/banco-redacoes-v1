@@ -13,14 +13,12 @@ function escaparHTML(texto) {
 
 // Transforma o texto da redação em parágrafos (<p>), um por linha do texto,
 // para que o CSS possa recuar a primeira linha de cada parágrafo.
-// Linhas vazias viram parágrafos vazios: o espaço entre os parágrafos continua.
+// As linhas vazias são puladas: como na folha do ENEM, o recuo marca o parágrafo.
 function textoEmParagrafos(texto) {
     let linhas = (texto || "").split("\n");
     let html = "";
     linhas.forEach(function (linha) {
-        if (linha.trim() === "") {
-            html += `<p class="linha-vazia">&nbsp;</p>`;
-        } else {
+        if (linha.trim() !== "") {
             html += `<p>${escaparHTML(linha)}</p>`;
         }
     });

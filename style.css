@@ -887,6 +887,12 @@ select:focus-visible {
     background-repeat: no-repeat, repeat;
 }
 
+/* Cada parágrafo começa com um recuo, como na folha do ENEM
+   (o JavaScript coloca cada parágrafo do texto num <p>) */
+.pagina-leitura .leitura-texto p {
+    text-indent: 2em;
+}
+
 /* Os números das linhas (01, 02, 03...): uma coluna da altura do texto.
    Os números que sobram ficam escondidos pelo overflow: hidden.
    "\A" é a quebra de linha dentro de um texto do CSS. */

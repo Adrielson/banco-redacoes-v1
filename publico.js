@@ -11,6 +11,22 @@ function escaparHTML(texto) {
     return div.innerHTML;
 }
 
+// Transforma o texto da redação em parágrafos (<p>), um por linha do texto,
+// para que o CSS possa recuar a primeira linha de cada parágrafo.
+// Linhas vazias viram parágrafos vazios: o espaço entre os parágrafos continua.
+function textoEmParagrafos(texto) {
+    let linhas = (texto || "").split("\n");
+    let html = "";
+    linhas.forEach(function (linha) {
+        if (linha.trim() === "") {
+            html += `<p class="linha-vazia">&nbsp;</p>`;
+        } else {
+            html += `<p>${escaparHTML(linha)}</p>`;
+        }
+    });
+    return html;
+}
+
 // Mostra um elemento que estava escondido pela classe "oculto"
 function mostrar(elemento) {
     elemento.classList.remove("oculto");
@@ -132,7 +148,7 @@ async function carregarRedacaoIndividual() {
             <h2>${escaparHTML(redacao.titulo)}</h2>
             <p class="meta">Tema: ${escaparHTML(redacao.tema)}</p>
             <p class="meta">Por <strong>${escaparHTML(redacao.candidato)}</strong></p>
-            <div class="leitura-texto">${escaparHTML(redacao.texto)}</div>
+            <div class="leitura-texto">${textoEmParagrafos(redacao.texto)}</div>
         </section>
 
         <section class="comentarios-bloco">

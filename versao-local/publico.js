@@ -27,6 +27,19 @@ function textoNota(redacao) {
     return String(redacao.nota);
 }
 
+// A cor da nota: verde a partir de 600, vermelha abaixo; cinza enquanto não há nota
+const NOTA_MINIMA_VERDE = 600;
+
+function classeNota(redacao) {
+    if (redacao.nota === null || redacao.nota === undefined) {
+        return "nota nota-pendente";
+    }
+    if (redacao.nota >= NOTA_MINIMA_VERDE) {
+        return "nota nota-alta";
+    }
+    return "nota nota-baixa";
+}
+
 // Com nota abaixo de 700, o nome do candidato não aparece para o público
 const NOTA_MINIMA_PARA_IDENTIFICAR = 700;
 
@@ -58,7 +71,7 @@ function renderizarCards(lista, mensagemSeVazia) {
             <h3>${escaparHTML(tituloDaRedacao(redacao))}</h3>
             <p>Tema: ${escaparHTML(redacao.tema)}</p>
             <p>Candidato: ${escaparHTML(nomePublico(redacao))}</p>
-            <p>Nota: ${escaparHTML(textoNota(redacao))}</p>
+            <p>Nota: <span class="${classeNota(redacao)}">${escaparHTML(textoNota(redacao))}</span></p>
             <div class="botoes-redacao">
                 <a href="redacao.html?id=${redacao.id}" class="ler">Ler redação</a>
             </div>
@@ -143,7 +156,7 @@ function carregarRedacaoIndividual() {
             <h2>${escaparHTML(tituloDaRedacao(redacao))}</h2>
             <p class="meta">Tema: ${escaparHTML(redacao.tema)}</p>
             <p class="meta">Por <strong>${escaparHTML(nomePublico(redacao))}</strong></p>
-            <p class="meta">Nota: <strong>${escaparHTML(textoNota(redacao))}</strong></p>
+            <p class="meta">Nota: <span class="${classeNota(redacao)}">${escaparHTML(textoNota(redacao))}</span></p>
             <div class="leitura-texto">${textoEmParagrafos(redacao.texto)}</div>
         </section>
 

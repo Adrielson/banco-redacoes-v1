@@ -547,6 +547,7 @@ footer a:hover {
 }
 
 .comentario .texto {
+    white-space: pre-line;      /* mantém as quebras de linha que o professor digitou */
     color: #333;
     margin-top: 0.4rem;
     line-height: 1.6;
@@ -884,4 +885,26 @@ button:focus-visible,
 select:focus-visible {
     outline: 3px solid #f39c12;
     outline-offset: 2px;
+}
+
+/* ===== Nota em destaque (index.html e redacao.html) =====
+   Verde (a cor do botão "Enviar minha redação") a partir de 600, vermelha abaixo de 600
+   e cinza enquanto a redação não foi corrigida. A classe vem da função classeNota (publico.js). */
+.nota {
+    font-size: 1.35rem;
+    font-weight: 700;
+}
+
+.nota-alta {
+    color: #27ae60;
+}
+
+.nota-baixa {
+    color: #e74c3c;
+}
+
+.nota-pendente {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #7f8c8d;
 }

@@ -61,6 +61,20 @@ function filtrarRedacoes(termo) {
 }
 
 // ===== redacao.html: leitura de uma redação =====
+
+// Transforma o texto da redação em parágrafos (<p>), um para cada linha do texto.
+// As linhas vazias são puladas: na folha de redação, o recuo é que marca o parágrafo.
+function textoEmParagrafos(texto) {
+    let linhas = (texto || "").split("\n");
+    let html = "";
+    linhas.forEach(function (linha) {
+        if (linha.trim() !== "") {
+            html += `<p>${escaparHTML(linha)}</p>`;
+        }
+    });
+    return html;
+}
+
 function carregarRedacaoIndividual() {
     let container = document.getElementById("conteudo-redacao");
     let mensagemErro = document.getElementById("mensagem-erro");
@@ -105,7 +119,7 @@ function carregarRedacaoIndividual() {
             <h2>${escaparHTML(redacao.titulo)}</h2>
             <p class="meta">Tema: ${escaparHTML(redacao.tema)}</p>
             <p class="meta">Por <strong>${escaparHTML(redacao.candidato)}</strong></p>
-            <div class="leitura-texto">${escaparHTML(redacao.texto)}</div>
+            <div class="leitura-texto">${textoEmParagrafos(redacao.texto)}</div>
         </section>
 
         <section class="comentarios-bloco">

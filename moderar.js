@@ -14,9 +14,18 @@ function escaparHTML(texto) {
     return div.innerHTML;
 }
 
-// Transforma o texto da redação em parágrafos (<p>), um por linha do texto,
-// para que o CSS possa recuar a primeira linha de cada parágrafo.
-// As linhas vazias são puladas: como na folha do ENEM, o recuo marca o parágrafo.
+// Mostra um elemento que estava escondido pela classe "oculto"
+function mostrar(elemento) {
+    elemento.classList.remove("oculto");
+}
+
+// Esconde um elemento colocando a classe "oculto"
+function esconder(elemento) {
+    elemento.classList.add("oculto");
+}
+
+// Transforma o texto da redação em parágrafos (<p>), um para cada linha do texto.
+// As linhas vazias são puladas: na folha de redação, o recuo é que marca o parágrafo.
 function textoEmParagrafos(texto) {
     let linhas = (texto || "").split("\n");
     let html = "";
@@ -26,16 +35,6 @@ function textoEmParagrafos(texto) {
         }
     });
     return html;
-}
-
-// Mostra um elemento que estava escondido pela classe "oculto"
-function mostrar(elemento) {
-    elemento.classList.remove("oculto");
-}
-
-// Esconde um elemento colocando a classe "oculto"
-function esconder(elemento) {
-    elemento.classList.add("oculto");
 }
 
 // Mostra uma mensagem (sucesso ou erro) no alto da página

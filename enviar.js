@@ -35,7 +35,7 @@ async function enviarRedacao(event) {
         texto: document.getElementById("texto").value.trim()
     };
 
-    if (!nova.tema || !nova.titulo || !nova.candidato || !nova.texto) {
+    if (!nova.tema || !nova.candidato || !nova.texto) {
         mostrarErro("❌ Preencha todos os campos obrigatórios.");
         return;
     }

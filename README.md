@@ -11,11 +11,15 @@ o JavaScript conversando com a API e a API em Python (Flask) com os dados em mem
 
 | Quem | Página | O que dá para fazer |
 | --- | --- | --- |
-| Visitante | `index.html` | ver as redações aprovadas, com contador e busca |
-| Visitante | `redacao.html?id=1` | ler uma redação aprovada, com os comentários dos professores |
-| Candidato | `enviar.html` | enviar uma redação, que entra como "aguardando" |
-| Administrador | `admin.html` | entrar com a senha; ver as estatísticas; aprovar, recusar, adicionar, editar, comentar e excluir |
+| Visitante | `index.html` | ver as redações aprovadas, com a nota, o contador e a busca |
+| Visitante | `redacao.html?id=1` | ler uma redação aprovada, com a nota e os comentários dos professores |
+| Candidato | `enviar.html` | enviar uma redação (o título é opcional), que entra como "aguardando" e sem nota |
+| Administrador | `admin.html` | entrar com a senha; ver as estatísticas; aprovar, recusar, adicionar, editar (inclusive a **nota**), comentar e excluir |
 | Administrador | `moderar.html?id=3` | ler uma redação e decidir: aprovar ou recusar |
+
+**Nota e anonimato:** a nota vai de 0 a 1000, como no ENEM, e é dada no painel do administrador.
+Enquanto a redação não é corrigida, a nota aparece como "ainda não avaliada". Quando a nota é
+**menor que 700**, as páginas públicas mostram o candidato como **"Anônimo"**.
 
 ## Arquivos
 
@@ -121,6 +125,7 @@ pronta para a internet:
 | As redações somem quando a API reinicia (inclusive ao salvar o `api.py`) | a lista fica na memória do `api.py` | Aulas 17 e 18: banco de dados SQLite |
 | A senha está no `admin.js`, e a API aceita pedidos de qualquer um | o login é só do navegador (simulado) | Aula 19: a API confere a senha |
 | A API devolve a matrícula para quem pedir direto a ela | ela não sabe quem está pedindo | Aula 19 |
+| O "Anônimo" (nota menor que 700) é feito pela página: a API ainda devolve o nome para quem pedir direto a ela, e aceita nota de qualquer um | ela não sabe quem está pedindo | versão completa: a API esconde o nome e só aceita nota do administrador logado |
 | Só funciona no computador | a API roda em `localhost` | Aula 20: publicação na internet |
 
 ## Problemas comuns

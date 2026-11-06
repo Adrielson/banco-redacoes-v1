@@ -20,6 +20,7 @@ redacoes = [
         "candidato": "Maria Silva",
         "matricula": "2023-001",
         "status": "aprovada",
+        "nota": 640,
         "texto": ("No contexto da sociedade brasileira, a discussão acerca de [tema proposto] "
                   "revela-se fundamental para a compreensão de [contextualização relacionada ao "
                   "assunto]. Sob essa perspectiva, observa-se que [apresentação da problemática ou "
@@ -59,6 +60,7 @@ redacoes = [
         "candidato": "João Souza",
         "matricula": "2022-114",
         "status": "aprovada",
+        "nota": 960,
         "texto": ("No ensaio “O direito à literatura”, Antonio Candido defende o acesso à criação "
                   "literária como uma necessidade ligada à formação humana. No Brasil, entretanto, "
                   "o contato com os livros permanece limitado por obstáculos que ultrapassam a "
@@ -98,6 +100,7 @@ redacoes = [
         "candidato": "Ana Costa",
         "matricula": "2023-089",
         "status": "aguardando",
+        "nota": None,
         "texto": ("O acesso à cultura no Brasil ainda é privilégio de poucos...\n\n"
                   "Logo, políticas públicas são essenciais."),
         "comentarios": []
@@ -109,6 +112,7 @@ redacoes = [
         "candidato": "Pedro Lima",
         "matricula": "2023-150",
         "status": "recusada",
+        "nota": 480,
         "texto": ("As grandes cidades brasileiras enfrentam congestionamentos diários...\n\n"
                   "Assim, investir em transporte público é urgente."),
         "comentarios": []
@@ -122,8 +126,18 @@ proximo_comentario_id = 2
 # Os únicos status que uma redação pode ter
 STATUS_VALIDOS = ["aguardando", "aprovada", "recusada"]
 
-# Campos que toda redação precisa ter preenchidos
-CAMPOS_OBRIGATORIOS = ["tema", "titulo", "candidato", "texto"]
+# Campos que toda redação precisa ter preenchidos (o título é opcional)
+CAMPOS_OBRIGATORIOS = ["tema", "candidato", "texto"]
+
+# A nota vai de 0 a 1000, como no ENEM (None enquanto a redação não foi corrigida)
+NOTA_MAXIMA = 1000
+
+
+# Confere a nota: vazia (None) ou um número inteiro de 0 a 1000
+def nota_valida(nota):
+    if nota is None:
+        return True
+    return type(nota) is int and 0 <= nota <= NOTA_MAXIMA
 
 
 # ===== GET /redacoes: lista as redações (aceita ?status=aprovada) =====
@@ -171,13 +185,20 @@ def criar_redacao():
     if status not in STATUS_VALIDOS:
         return jsonify({"erro": "Status inválido"}), 400
 
+    # A nota só é enviada pelo painel do administrador (o enviar.js não manda nota).
+    # Nesta versão, a API ainda não sabe quem é o administrador: a versão completa confere o login.
+    nota = dados.get("nota")
+    if not nota_valida(nota):
+        return jsonify({"erro": "A nota deve ser um número inteiro de 0 a 1000"}), 400
+
     nova = {
         "id": proximo_id,
         "tema": dados["tema"],
-        "titulo": dados["titulo"],
+        "titulo": dados.get("titulo") or "",
         "candidato": dados["candidato"],
         "matricula": dados.get("matricula", ""),
         "status": status,
+        "nota": nota,
         "texto": dados["texto"],
         "comentarios": []
     }
@@ -204,10 +225,14 @@ def alterar_redacao(id):
     if "status" in dados and dados["status"] not in STATUS_VALIDOS:
         return jsonify({"erro": "Status inválido"}), 400
 
+    if "nota" in dados and not nota_valida(dados["nota"]):
+        return jsonify({"erro": "A nota deve ser um número inteiro de 0 a 1000"}), 400
+
     # Só muda os campos que vieram; os outros continuam como estavam
-    for campo in ["tema", "titulo", "candidato", "matricula", "status", "texto"]:
+    for campo in ["tema", "titulo", "candidato", "matricula", "status", "nota", "texto"]:
         if campo in dados:
             redacao[campo] = dados[campo]
+    redacao["titulo"] = redacao["titulo"] or ""
 
     return jsonify(redacao)
 

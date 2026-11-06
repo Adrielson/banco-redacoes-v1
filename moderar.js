@@ -24,6 +24,19 @@ function esconder(elemento) {
     elemento.classList.add("oculto");
 }
 
+// O título é opcional: sem ele, a página mostra "Sem título"
+function tituloDaRedacao(redacao) {
+    return redacao.titulo || "Sem título";
+}
+
+// A nota fica vazia (null) até a correção
+function textoNota(redacao) {
+    if (redacao.nota === null || redacao.nota === undefined) {
+        return "ainda não avaliada";
+    }
+    return String(redacao.nota);
+}
+
 // Transforma o texto da redação em parágrafos (<p>), um para cada linha do texto.
 // As linhas vazias são puladas: na folha de redação, o recuo é que marca o parágrafo.
 function textoEmParagrafos(texto) {
@@ -134,10 +147,11 @@ function desenharRedacao(redacao) {
 
     document.getElementById("conteudo-moderacao").innerHTML = `
         <section class="leitura-bloco">
-            <h2>${escaparHTML(redacao.titulo)}</h2>
+            <h2>${escaparHTML(tituloDaRedacao(redacao))}</h2>
             <p class="meta">Tema: ${escaparHTML(redacao.tema)}</p>
             <p class="meta">Candidato: <strong>${escaparHTML(redacao.candidato)}</strong> • Matrícula ${escaparHTML(redacao.matricula || "-")}</p>
             <p class="meta">Status atual: <span class="${info.classe}">${info.texto}</span></p>
+            <p class="meta">Nota: <strong>${escaparHTML(textoNota(redacao))}</strong></p>
             <div class="leitura-texto">${textoEmParagrafos(redacao.texto)}</div>
         </section>
 

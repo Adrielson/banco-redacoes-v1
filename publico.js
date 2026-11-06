@@ -16,6 +16,30 @@ function mostrar(elemento) {
     elemento.classList.remove("oculto");
 }
 
+// O título é opcional: sem ele, a página mostra "Sem título"
+function tituloDaRedacao(redacao) {
+    return redacao.titulo || "Sem título";
+}
+
+// A nota fica vazia (null) até a correção
+function textoNota(redacao) {
+    if (redacao.nota === null || redacao.nota === undefined) {
+        return "ainda não avaliada";
+    }
+    return String(redacao.nota);
+}
+
+// Com nota abaixo de 700, o nome do candidato não aparece para o público.
+// (Na versão completa, quem esconde o nome é a própria API.)
+const NOTA_MINIMA_PARA_IDENTIFICAR = 700;
+
+function nomePublico(redacao) {
+    if (redacao.nota !== null && redacao.nota !== undefined && redacao.nota < NOTA_MINIMA_PARA_IDENTIFICAR) {
+        return "Anônimo";
+    }
+    return redacao.candidato;
+}
+
 // ===== index.html: lista e busca =====
 
 // As redações aprovadas, que chegam da API (a lista começa vazia)
@@ -34,9 +58,10 @@ function renderizarCards(lista, mensagemSeVazia) {
         let card = document.createElement("article");
         card.className = "redacao";
         card.innerHTML = `
-            <h3>${escaparHTML(redacao.titulo)}</h3>
+            <h3>${escaparHTML(tituloDaRedacao(redacao))}</h3>
             <p>Tema: ${escaparHTML(redacao.tema)}</p>
-            <p>Candidato: ${escaparHTML(redacao.candidato)}</p>
+            <p>Candidato: ${escaparHTML(nomePublico(redacao))}</p>
+            <p>Nota: ${escaparHTML(textoNota(redacao))}</p>
             <div class="botoes-redacao">
                 <a href="redacao.html?id=${redacao.id}" class="ler">Ler redação</a>
             </div>
@@ -66,9 +91,9 @@ function filtrarRedacoes(termo) {
     let termoMinusculo = termo.toLowerCase().trim();
 
     let filtradas = redacoesPublicas.filter(function (r) {
-        return r.titulo.toLowerCase().includes(termoMinusculo) ||
+        return (r.titulo || "").toLowerCase().includes(termoMinusculo) ||
                r.tema.toLowerCase().includes(termoMinusculo) ||
-               r.candidato.toLowerCase().includes(termoMinusculo);
+               nomePublico(r).toLowerCase().includes(termoMinusculo);
     });
 
     renderizarCards(filtradas, `Nenhuma redação encontrada para "${escaparHTML(termo)}".`);
@@ -143,9 +168,10 @@ async function carregarRedacaoIndividual() {
 
     container.innerHTML = `
         <section class="leitura-bloco">
-            <h2>${escaparHTML(redacao.titulo)}</h2>
+            <h2>${escaparHTML(tituloDaRedacao(redacao))}</h2>
             <p class="meta">Tema: ${escaparHTML(redacao.tema)}</p>
-            <p class="meta">Por <strong>${escaparHTML(redacao.candidato)}</strong></p>
+            <p class="meta">Por <strong>${escaparHTML(nomePublico(redacao))}</strong></p>
+            <p class="meta">Nota: <strong>${escaparHTML(textoNota(redacao))}</strong></p>
             <div class="leitura-texto">${textoEmParagrafos(redacao.texto)}</div>
         </section>
 

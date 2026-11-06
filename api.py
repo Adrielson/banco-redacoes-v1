@@ -185,8 +185,8 @@ def criar_redacao():
     if status not in STATUS_VALIDOS:
         return jsonify({"erro": "Status inválido"}), 400
 
-    # A nota só é enviada pelo painel do administrador (o enviar.js não manda nota).
-    # Nesta versão, a API ainda não sabe quem é o administrador: a versão completa confere o login.
+    # A nota vem do painel do administrador (o enviar.js não manda nota).
+    # Na Aula 19, a API passa a conferir o login: só o administrador dá nota.
     nota = dados.get("nota")
     if not nota_valida(nota):
         return jsonify({"erro": "A nota deve ser um número inteiro de 0 a 1000"}), 400

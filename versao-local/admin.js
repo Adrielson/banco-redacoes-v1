@@ -29,6 +29,33 @@ function esconder(elemento) {
     elemento.classList.add("oculto");
 }
 
+// O título é opcional: sem ele, a página mostra "Sem título"
+function tituloDaRedacao(redacao) {
+    return redacao.titulo || "Sem título";
+}
+
+// A nota fica vazia (null) até a correção
+function textoNota(redacao) {
+    if (redacao.nota === null || redacao.nota === undefined) {
+        return "ainda não avaliada";
+    }
+    return String(redacao.nota);
+}
+
+// Lê a nota de um campo do formulário: vazio vira null (sem nota)
+function lerNota(id) {
+    let texto = document.getElementById(id).value.trim();
+    if (texto === "") {
+        return null;
+    }
+    return Number(texto);
+}
+
+// A nota pode ficar vazia; se tiver valor, é um número inteiro de 0 a 1000
+function notaValida(nota) {
+    return nota === null || (Number.isInteger(nota) && nota >= 0 && nota <= 1000);
+}
+
 // Mostra uma mensagem (sucesso ou erro) que some sozinha depois de 3 segundos
 function mostrarMensagem(id, texto) {
     let mensagem = document.getElementById(id);
@@ -106,10 +133,11 @@ function criarCard(redacao, botoesHTML) {
     let card = document.createElement("article");
     card.className = "redacao";
     card.innerHTML = `
-        <h3>${escaparHTML(redacao.titulo)}</h3>
+        <h3>${escaparHTML(tituloDaRedacao(redacao))}</h3>
         <p>Tema: ${escaparHTML(redacao.tema)}</p>
         <p>Candidato: ${escaparHTML(redacao.candidato)}</p>
         <p>Matrícula: ${escaparHTML(redacao.matricula || "-")}</p>
+        <p>Nota: ${escaparHTML(textoNota(redacao))}</p>
         <p>Status: <span class="${info.classe}">${info.texto}</span></p>
         <div class="botoes-redacao">${botoesHTML}</div>
     `;
@@ -219,12 +247,17 @@ function adicionarRedacao(event) {
         candidato: document.getElementById("candidato").value.trim(),
         matricula: document.getElementById("matricula").value.trim(),
         status: document.getElementById("status").value,
+        nota: lerNota("nota"),
         texto: document.getElementById("texto").value.trim(),
         comentarios: []
     };
 
-    if (!nova.tema || !nova.titulo || !nova.candidato || !nova.texto) {
-        mostrarMensagem("mensagem-erro", "❌ Preencha tema, título, candidato e texto.");
+    if (!nova.tema || !nova.candidato || !nova.texto) {
+        mostrarMensagem("mensagem-erro", "❌ Preencha tema, candidato e texto.");
+        return;
+    }
+    if (!notaValida(nova.nota)) {
+        mostrarMensagem("mensagem-erro", "❌ A nota deve ser um número inteiro de 0 a 1000 (ou ficar vazia).");
         return;
     }
 
@@ -244,7 +277,8 @@ function abrirEdicao(id) {
     document.getElementById("editar-candidato").value = redacao.candidato;
     document.getElementById("editar-matricula").value = redacao.matricula;
     document.getElementById("editar-status").value = redacao.status;
-    document.getElementById("editar-titulo").value = redacao.titulo;
+    document.getElementById("editar-titulo").value = redacao.titulo || "";
+    document.getElementById("editar-nota").value = (redacao.nota === null || redacao.nota === undefined) ? "" : redacao.nota;
     document.getElementById("editar-texto").value = redacao.texto;
 
     let secao = document.getElementById("editar");
@@ -260,9 +294,14 @@ function salvarEdicao(event) {
     let titulo = document.getElementById("editar-titulo").value.trim();
     let candidato = document.getElementById("editar-candidato").value.trim();
     let texto = document.getElementById("editar-texto").value.trim();
+    let nota = lerNota("editar-nota");
 
-    if (!tema || !titulo || !candidato || !texto) {
-        mostrarMensagem("mensagem-erro", "❌ Tema, título, candidato e texto não podem ficar vazios.");
+    if (!tema || !candidato || !texto) {
+        mostrarMensagem("mensagem-erro", "❌ Tema, candidato e texto não podem ficar vazios.");
+        return;
+    }
+    if (!notaValida(nota)) {
+        mostrarMensagem("mensagem-erro", "❌ A nota deve ser um número inteiro de 0 a 1000 (ou ficar vazia).");
         return;
     }
 
@@ -271,6 +310,7 @@ function salvarEdicao(event) {
     redacao.candidato = candidato;
     redacao.matricula = document.getElementById("editar-matricula").value.trim();
     redacao.status = document.getElementById("editar-status").value;
+    redacao.nota = nota;
     redacao.texto = texto;
 
     esconder(document.getElementById("editar"));
@@ -287,7 +327,7 @@ function abrirComentario(id) {
     let redacao = buscarRedacao(id);
 
     document.getElementById("comentario-redacao-id").value = redacao.id;
-    document.getElementById("comentario-redacao-titulo").textContent = redacao.titulo;
+    document.getElementById("comentario-redacao-titulo").textContent = tituloDaRedacao(redacao);
     document.getElementById("comentario-autor").value = "";
     document.getElementById("comentario-texto").value = "";
 

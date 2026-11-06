@@ -29,8 +29,7 @@ function textoNota(redacao) {
     return String(redacao.nota);
 }
 
-// Com nota abaixo de 700, o nome do candidato não aparece para o público.
-// (Na versão completa, quem esconde o nome é a própria API.)
+// Com nota abaixo de 700, o nome do candidato não aparece para o público
 const NOTA_MINIMA_PARA_IDENTIFICAR = 700;
 
 function nomePublico(redacao) {

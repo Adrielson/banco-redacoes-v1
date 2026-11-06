@@ -64,6 +64,7 @@
                     <p>Tema: Democratização do acesso à cultura</p>
                     <p>Candidato: Ana Costa</p>
                     <p>Matrícula: 2023-089</p>
+                    <p>Nota: ainda não avaliada</p>
                     <p>Status: <span class="status-aguardando">Aguardando aprovação</span></p>
                     <div class="botoes-redacao">
                         <a href="moderar.html?id=3" class="ler">Ler e moderar</a>
@@ -84,6 +85,7 @@
                     <p>Tema: Modelo dissertativo-argumentativo</p>
                     <p>Candidato: Maria Silva</p>
                     <p>Matrícula: 2023-001</p>
+                    <p>Nota: 640</p>
                     <p>Status: <span class="status-aprovada">Aprovada</span></p>
                     <div class="botoes-redacao">
                         <a href="moderar.html?id=1" class="ler">Ler</a>
@@ -98,6 +100,7 @@
                     <p>Tema: Democratização do acesso à cultura</p>
                     <p>Candidato: Ana Costa</p>
                     <p>Matrícula: 2023-089</p>
+                    <p>Nota: ainda não avaliada</p>
                     <p>Status: <span class="status-aguardando">Aguardando aprovação</span></p>
                     <div class="botoes-redacao">
                         <a href="moderar.html?id=3" class="ler">Ler</a>
@@ -112,6 +115,7 @@
                     <p>Tema: Mobilidade urbana nas grandes cidades</p>
                     <p>Candidato: Pedro Lima</p>
                     <p>Matrícula: 2023-150</p>
+                    <p>Nota: 480</p>
                     <p>Status: <span class="status-recusada">Recusada</span></p>
                     <div class="botoes-redacao">
                         <a href="moderar.html?id=4" class="ler">Ler</a>
@@ -152,8 +156,13 @@
                 </div>
 
                 <div class="campo">
-                    <label for="titulo">Título da Redação *</label>
-                    <input type="text" id="titulo" placeholder="Cole ou digite aqui o título da sua redação..." required>
+                    <label for="nota">Nota (0 a 1000)</label>
+                    <input type="number" id="nota" min="0" max="1000" step="1" placeholder="Vazia até a correção">
+                </div>
+
+                <div class="campo">
+                    <label for="titulo">Título da Redação (opcional)</label>
+                    <input type="text" id="titulo" placeholder="Cole ou digite aqui o título da sua redação...">
                 </div>
 
                 <div class="campo">
@@ -197,7 +206,12 @@
                 </div>
 
                 <div class="campo">
-                    <label for="editar-titulo">Título da Redação</label>
+                    <label for="editar-nota">Nota (0 a 1000)</label>
+                    <input type="number" id="editar-nota" min="0" max="1000" step="1" placeholder="Vazia até a correção">
+                </div>
+
+                <div class="campo">
+                    <label for="editar-titulo">Título da Redação (opcional)</label>
                     <input type="text" id="editar-titulo">
                 </div>
 

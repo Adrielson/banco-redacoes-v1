@@ -42,6 +42,22 @@
                 </div>
             </section>
 
+            <section class="caixa-formulario" id="avaliacao">
+                <h2>Avaliação</h2>
+                <div class="campo">
+                    <label for="moderar-nota">Nota (0 a 1000)</label>
+                    <input type="number" id="moderar-nota" min="0" max="1000" step="1" placeholder="Vazia até a correção">
+                </div>
+                <div class="campo">
+                    <label for="moderar-autor">Professor revisor</label>
+                    <input type="text" id="moderar-autor" placeholder="Ex: Prof. Carlos (só se for comentar)">
+                </div>
+                <div class="campo">
+                    <label for="moderar-comentario">Comentário (opcional)</label>
+                    <textarea id="moderar-comentario" placeholder="Escreva seu comentário sobre a redação..."></textarea>
+                </div>
+            </section>
+
             <div class="botoes-moderacao">
                 <button type="button" class="aprovar" id="btn-aprovar">Aprovar e Publicar</button>
                 <button type="button" class="recusar" id="btn-recusar">Recusar</button>

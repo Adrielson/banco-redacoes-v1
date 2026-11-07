@@ -133,8 +133,8 @@ function criarCard(redacao, botoesHTML) {
     let card = document.createElement("article");
     card.className = "redacao";
     card.innerHTML = `
-        <h3>${escaparHTML(tituloDaRedacao(redacao))}</h3>
-        <p>Tema: ${escaparHTML(redacao.tema)}</p>
+        <h3>${escaparHTML(redacao.tema)}</h3>
+        <p>Título: ${escaparHTML(tituloDaRedacao(redacao))}</p>
         <p>Candidato: ${escaparHTML(redacao.candidato)}</p>
         <p>Matrícula: ${escaparHTML(redacao.matricula || "-")}</p>
         <p>Nota: ${escaparHTML(textoNota(redacao))}</p>
@@ -280,6 +280,8 @@ function abrirEdicao(id) {
     document.getElementById("editar-titulo").value = redacao.titulo || "";
     document.getElementById("editar-nota").value = (redacao.nota === null || redacao.nota === undefined) ? "" : redacao.nota;
     document.getElementById("editar-texto").value = redacao.texto;
+    document.getElementById("editar-comentario-autor").value = "";
+    document.getElementById("editar-comentario-texto").value = "";
 
     let secao = document.getElementById("editar");
     mostrar(secao);
@@ -305,6 +307,14 @@ function salvarEdicao(event) {
         return;
     }
 
+    // O comentário é opcional; se houver texto, precisa do nome do professor
+    let comentarioAutor = document.getElementById("editar-comentario-autor").value.trim();
+    let comentarioTexto = document.getElementById("editar-comentario-texto").value.trim();
+    if (comentarioTexto && !comentarioAutor) {
+        mostrarMensagem("mensagem-erro", "❌ Para comentar, escreva o nome do professor revisor.");
+        return;
+    }
+
     redacao.tema = tema;
     redacao.titulo = titulo;
     redacao.candidato = candidato;
@@ -312,6 +322,16 @@ function salvarEdicao(event) {
     redacao.status = document.getElementById("editar-status").value;
     redacao.nota = nota;
     redacao.texto = texto;
+
+    if (comentarioTexto) {
+        redacao.comentarios.push({
+            id: proximoComentarioId,
+            autor: comentarioAutor,
+            texto: comentarioTexto,
+            data: dataDeHoje()
+        });
+        proximoComentarioId++;
+    }
 
     esconder(document.getElementById("editar"));
     atualizarPainel();

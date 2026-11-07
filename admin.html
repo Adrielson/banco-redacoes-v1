@@ -60,8 +60,8 @@
             <!-- Card de EXEMPLO (o admin.js troca pelas redações "aguardando" da API) -->
             <div id="lista-moderacao">
                 <article class="redacao">
-                    <h3>Cultura para quem?</h3>
-                    <p>Tema: Democratização do acesso à cultura</p>
+                    <h3>Democratização do acesso à cultura</h3>
+                    <p>Título: Cultura para quem?</p>
                     <p>Candidato: Ana Costa</p>
                     <p>Matrícula: 2023-089</p>
                     <p>Nota: ainda não avaliada</p>
@@ -82,7 +82,7 @@
             <div id="lista-redacoes">
                 <article class="redacao">
                     <h3>Modelo dissertativo-argumentativo</h3>
-                    <p>Tema: Modelo dissertativo-argumentativo</p>
+                    <p>Título: Modelo dissertativo-argumentativo</p>
                     <p>Candidato: Maria Silva</p>
                     <p>Matrícula: 2023-001</p>
                     <p>Nota: 640</p>
@@ -96,8 +96,8 @@
                 </article>
 
                 <article class="redacao">
-                    <h3>Cultura para quem?</h3>
-                    <p>Tema: Democratização do acesso à cultura</p>
+                    <h3>Democratização do acesso à cultura</h3>
+                    <p>Título: Cultura para quem?</p>
                     <p>Candidato: Ana Costa</p>
                     <p>Matrícula: 2023-089</p>
                     <p>Nota: ainda não avaliada</p>
@@ -111,8 +111,8 @@
                 </article>
 
                 <article class="redacao">
-                    <h3>O trânsito que nos paralisa</h3>
-                    <p>Tema: Mobilidade urbana nas grandes cidades</p>
+                    <h3>Mobilidade urbana nas grandes cidades</h3>
+                    <p>Título: O trânsito que nos paralisa</p>
                     <p>Candidato: Pedro Lima</p>
                     <p>Matrícula: 2023-150</p>
                     <p>Nota: 480</p>
@@ -218,6 +218,16 @@
                 <div class="campo">
                     <label for="editar-texto">Texto da Redação</label>
                     <textarea id="editar-texto"></textarea>
+                </div>
+
+                <div class="campo">
+                    <label for="editar-comentario-autor">Professor revisor</label>
+                    <input type="text" id="editar-comentario-autor" placeholder="Ex: Prof. Carlos (só se for comentar)">
+                </div>
+
+                <div class="campo">
+                    <label for="editar-comentario-texto">Novo comentário (opcional)</label>
+                    <textarea id="editar-comentario-texto" placeholder="Escreva seu comentário sobre a redação..."></textarea>
                 </div>
 
                 <button type="submit">Atualizar Redação</button>

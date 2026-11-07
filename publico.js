@@ -70,8 +70,8 @@ function renderizarCards(lista, mensagemSeVazia) {
         let card = document.createElement("article");
         card.className = "redacao";
         card.innerHTML = `
-            <h3>${escaparHTML(tituloDaRedacao(redacao))}</h3>
-            <p>Tema: ${escaparHTML(redacao.tema)}</p>
+            <h3>${escaparHTML(redacao.tema)}</h3>
+            <p>Título: ${escaparHTML(tituloDaRedacao(redacao))}</p>
             <p>Candidato: ${escaparHTML(nomePublico(redacao))}</p>
             <p>Nota: <span class="${classeNota(redacao)}">${escaparHTML(textoNota(redacao))}</span></p>
             <div class="botoes-redacao">

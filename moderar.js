@@ -24,6 +24,20 @@ function esconder(elemento) {
     elemento.classList.add("oculto");
 }
 
+// Lê a nota de um campo: vazio vira null (sem nota)
+function lerNota(id) {
+    let texto = document.getElementById(id).value.trim();
+    if (texto === "") {
+        return null;
+    }
+    return Number(texto);
+}
+
+// A nota pode ficar vazia; se tiver valor, é um número inteiro de 0 a 1000
+function notaValida(nota) {
+    return nota === null || (Number.isInteger(nota) && nota >= 0 && nota <= 1000);
+}
+
 // O título é opcional: sem ele, a página mostra "Sem título"
 function tituloDaRedacao(redacao) {
     return redacao.titulo || "Sem título";
@@ -120,7 +134,24 @@ function desenharRedacao(redacao) {
     // Os botões só aparecem se a redação ainda espera uma decisão
     let decisaoHTML = "";
     if (redacao.status === "aguardando") {
+        let notaAtual = (redacao.nota === null || redacao.nota === undefined) ? "" : redacao.nota;
         decisaoHTML = `
+            <section class="caixa-formulario" id="avaliacao">
+                <h2>Avaliação</h2>
+                <div class="campo">
+                    <label for="moderar-nota">Nota (0 a 1000)</label>
+                    <input type="number" id="moderar-nota" min="0" max="1000" step="1" placeholder="Vazia até a correção" value="${notaAtual}">
+                </div>
+                <div class="campo">
+                    <label for="moderar-autor">Professor revisor</label>
+                    <input type="text" id="moderar-autor" placeholder="Ex: Prof. Carlos (só se for comentar)">
+                </div>
+                <div class="campo">
+                    <label for="moderar-comentario">Comentário (opcional)</label>
+                    <textarea id="moderar-comentario" placeholder="Escreva seu comentário sobre a redação..."></textarea>
+                </div>
+            </section>
+
             <div class="botoes-moderacao">
                 <button type="button" class="aprovar" id="btn-aprovar" data-acao="aprovar" data-id="${redacao.id}">Aprovar e Publicar</button>
                 <button type="button" class="recusar" id="btn-recusar" data-acao="recusar" data-id="${redacao.id}">Recusar</button>
@@ -165,9 +196,27 @@ function desenharRedacao(redacao) {
 }
 
 // ===== Aprovar ou recusar =====
+// A nota e o comentário da área "Avaliação" são salvos junto com a decisão
 async function decidir(id, novoStatus) {
+    let nota = lerNota("moderar-nota");
+    let autor = document.getElementById("moderar-autor").value.trim();
+    let comentario = document.getElementById("moderar-comentario").value.trim();
+
+    if (!notaValida(nota)) {
+        mostrarMensagem("mensagem-erro", "❌ A nota deve ser um número inteiro de 0 a 1000 (ou ficar vazia).");
+        return;
+    }
+    if (comentario && !autor) {
+        mostrarMensagem("mensagem-erro", "❌ Para comentar, escreva o nome do professor revisor.");
+        return;
+    }
+
     try {
-        await pedirAPI("PUT", "/redacoes/" + id, { status: novoStatus });
+        await pedirAPI("PUT", "/redacoes/" + id, { status: novoStatus, nota: nota });
+        if (comentario) {
+            await pedirAPI("POST", "/redacoes/" + id + "/comentarios", { autor: autor, texto: comentario });
+        }
+        esconder(document.getElementById("avaliacao"));
         esconder(document.querySelector(".botoes-moderacao"));
 
         if (novoStatus === "aprovada") {

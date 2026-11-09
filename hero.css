@@ -172,17 +172,8 @@
     transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
 }
 
-.hero-cta .hero-seta {
-    display: inline-block;
-    transition: transform 0.25s ease;
-}
-
 .hero-cta:hover {
     transform: translateY(-2px);
-}
-
-.hero-cta:hover .hero-seta {
-    transform: translateX(4px);
 }
 
 .hero-cta-principal {
@@ -474,7 +465,6 @@
     }
 
     .hero-cta,
-    .hero-cta .hero-seta,
     .hero-folha {
         transition: none;
     }

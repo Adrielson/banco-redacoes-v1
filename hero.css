@@ -1,0 +1,473 @@
+/* ==========================================================
+   Banco de Redações CEJOL — hero.css  (EXPERIMENTO)
+   Hero Section da página inicial. Carregado só pelo index.html,
+   depois do style.css: as outras páginas não mudam.
+   Para desfazer o experimento: voltar para a branch main.
+   ========================================================== */
+
+/* ===== Cores do experimento (as mesmas do projeto, mais escuras no fundo) ===== */
+.hero {
+    --hero-fundo-1: #1e1b4b;      /* azul-noite */
+    --hero-fundo-2: #3b2f86;      /* o roxo do projeto, escurecido */
+    --hero-fundo-3: #5b3a8e;
+    --hero-azul: #667eea;         /* a cor principal do projeto */
+    --hero-verde: #27ae60;        /* a cor do botão "Enviar minha redação" */
+    --hero-verde-escuro: #219150;
+    --hero-texto: #eef0ff;
+    --hero-texto-suave: #c7cbf3;
+    --hero-tinta: #1e2f6b;        /* a tinta azul da folha de redação */
+    --mx: 50%;                    /* posição do mouse (o hero.js atualiza) */
+    --my: 40%;
+}
+
+/* ===== A seção ===== */
+.hero {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    margin-bottom: 1.5rem;
+    border-radius: 18px;
+    padding: 3.2rem 2.8rem;
+    color: var(--hero-texto);
+    background:
+        radial-gradient(circle at var(--mx) var(--my), rgba(102, 126, 234, 0.35), transparent 42%),
+        linear-gradient(125deg, var(--hero-fundo-1), var(--hero-fundo-2), var(--hero-fundo-3), var(--hero-fundo-1));
+    background-size: 100% 100%, 300% 300%;
+    animation: hero-gradiente 22s ease-in-out infinite;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    align-items: center;
+    gap: 2rem;
+    min-height: 460px;
+}
+
+@keyframes hero-gradiente {
+    0%, 100% { background-position: 0 0, 0% 50%; }
+    50%      { background-position: 0 0, 100% 50%; }
+}
+
+/* O canvas das partículas ocupa a seção inteira, atrás do conteúdo */
+.hero-fundo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Uma faixa de "pautas" bem leve, lembrando a folha de redação */
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image: linear-gradient(to bottom, transparent 31px, rgba(255, 255, 255, 0.05) 32px);
+    background-size: 100% 32px;
+    mask-image: linear-gradient(to right, transparent, #000 30%, #000 70%, transparent);
+    pointer-events: none;
+}
+
+/* ===== Textos ===== */
+.hero-conteudo {
+    position: relative;
+    z-index: 1;
+}
+
+.hero-selo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.9rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--hero-texto);
+    backdrop-filter: blur(4px);
+}
+
+.hero-selo::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--hero-verde);
+    box-shadow: 0 0 0 0 rgba(39, 174, 96, 0.6);
+    animation: hero-pulso 2.4s ease-out infinite;
+}
+
+@keyframes hero-pulso {
+    0%   { box-shadow: 0 0 0 0 rgba(39, 174, 96, 0.6); }
+    80%  { box-shadow: 0 0 0 10px rgba(39, 174, 96, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(39, 174, 96, 0); }
+}
+
+.hero-titulo {
+    margin: 1.1rem 0 1rem;
+    font-size: clamp(2rem, 4.2vw, 3.1rem);
+    line-height: 1.12;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+}
+
+/* A palavra em destaque: letra escrita à mão, com um "grifo" que se desenha */
+.hero-destaque {
+    position: relative;
+    display: inline-block;
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: 1.25em;
+    line-height: 1;
+    color: #fde68a;
+    white-space: nowrap;
+}
+
+.hero-destaque::after {
+    content: "";
+    position: absolute;
+    left: -2%;
+    right: -2%;
+    bottom: 0.1em;
+    height: 0.26em;
+    z-index: -1;
+    border-radius: 6px;
+    background: rgba(39, 174, 96, 0.55);
+    transform: scaleX(0);
+    transform-origin: left;
+    animation: hero-grifo 0.9s 0.9s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+@keyframes hero-grifo {
+    to { transform: scaleX(1); }
+}
+
+.hero-texto {
+    max-width: 34rem;
+    font-size: 1.08rem;
+    line-height: 1.65;
+    color: var(--hero-texto-suave);
+}
+
+/* ===== Chamadas para ação ===== */
+.hero-acoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+    margin-top: 1.8rem;
+}
+
+.hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.9rem 1.5rem;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.hero-cta .hero-seta {
+    display: inline-block;
+    transition: transform 0.25s ease;
+}
+
+.hero-cta:hover {
+    transform: translateY(-2px);
+}
+
+.hero-cta:hover .hero-seta {
+    transform: translateX(4px);
+}
+
+.hero-cta-principal {
+    background: var(--hero-verde);
+    color: #ffffff;
+    box-shadow: 0 10px 24px rgba(39, 174, 96, 0.35);
+}
+
+.hero-cta-principal:hover {
+    background: var(--hero-verde-escuro);
+    box-shadow: 0 14px 30px rgba(39, 174, 96, 0.45);
+}
+
+.hero-cta-secundario {
+    color: #ffffff;
+    border: 2px solid rgba(255, 255, 255, 0.35);
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.hero-cta-secundario:hover {
+    border-color: #ffffff;
+    background: rgba(255, 255, 255, 0.14);
+}
+
+.hero-cta:focus-visible {
+    outline: 3px solid #fde68a;
+    outline-offset: 3px;
+}
+
+/* ===== Números ===== */
+.hero-numeros {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.6rem;
+    margin-top: 2rem;
+    padding-top: 1.4rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    list-style: none;
+}
+
+.hero-numeros li {
+    font-size: 0.85rem;
+    color: var(--hero-texto-suave);
+}
+
+.hero-numeros strong {
+    display: block;
+    font-size: 1.5rem;
+    color: #ffffff;
+    font-variant-numeric: tabular-nums;
+}
+
+/* A faixa original "N redações publicadas" continua na página (o publico.js escreve nela
+   e a Hero copia o número), mas só para leitores de tela: na tela, o número já está na Hero. */
+.hero + #estatisticas {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* ===== Imagem e folha de redação ===== */
+.hero-visual {
+    position: relative;
+    z-index: 1;
+    justify-self: center;
+    width: 100%;
+    max-width: 420px;
+    aspect-ratio: 420 / 380;
+    perspective: 900px;
+}
+
+.hero-imagem {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 18px 30px rgba(10, 8, 40, 0.45));
+    animation: hero-flutuar 7s ease-in-out infinite;
+}
+
+@keyframes hero-flutuar {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-10px); }
+}
+
+/* A mini folha de redação, por cima da ilustração (o hero.js "escreve" o texto) */
+.hero-folha {
+    position: absolute;
+    right: -2%;
+    bottom: 4%;
+    width: 62%;
+    padding: 0.7rem 0.8rem 0.8rem;
+    border-radius: 8px;
+    background: #fffef8;
+    color: var(--hero-tinta);
+    box-shadow: 0 18px 40px rgba(10, 8, 40, 0.45);
+    transform: rotate(4deg) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+    transform-style: preserve-3d;
+    transition: transform 0.3s ease-out;
+}
+
+.hero-folha-topo {
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: #1f3a93;
+    padding-bottom: 0.25rem;
+    border-bottom: 2px solid #1f3a93;
+    margin-bottom: 0.3rem;
+}
+
+.hero-folha-texto {
+    --linha: 1.35rem;
+    min-height: calc(var(--linha) * 4);
+    font-family: 'Caveat', cursive;
+    font-size: 1.05rem;
+    line-height: var(--linha);
+    background-image: linear-gradient(to bottom, transparent calc(var(--linha) - 1px), #c9d6ea calc(var(--linha) - 1px));
+    background-size: 100% var(--linha);
+    border-left: 1px solid #e8a3a3;
+    padding-left: 0.5rem;
+    text-indent: 1em;
+}
+
+/* o cursor piscando enquanto o texto é escrito */
+.hero-folha-texto.escrevendo::after {
+    content: "|";
+    margin-left: 1px;
+    animation: hero-cursor 0.9s steps(1) infinite;
+}
+
+@keyframes hero-cursor {
+    50% { opacity: 0; }
+}
+
+/* o carimbo da nota */
+.hero-carimbo {
+    position: absolute;
+    top: -1.1rem;
+    right: -0.9rem;
+    display: grid;
+    place-items: center;
+    width: 4.2rem;
+    height: 4.2rem;
+    border-radius: 50%;
+    background: var(--hero-verde);
+    color: #ffffff;
+    box-shadow: 0 8px 18px rgba(39, 174, 96, 0.45);
+    text-align: center;
+    line-height: 1;
+    transform: rotate(-12deg);
+}
+
+.hero-carimbo span {
+    display: block;
+    font-size: 0.55rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.hero-carimbo strong {
+    font-size: 1.25rem;
+}
+
+/* o carimbo "bate" quando o hero.js termina de escrever */
+.hero-carimbo.carimbar {
+    animation: hero-carimbar 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes hero-carimbar {
+    0%   { transform: rotate(-12deg) scale(2.2); opacity: 0; }
+    100% { transform: rotate(-12deg) scale(1); opacity: 1; }
+}
+
+/* ===== Entrada dos elementos (só CSS: sem JavaScript, tudo aparece igual) ===== */
+.hero-entrada {
+    animation: hero-entrar 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: var(--atraso, 0s);
+}
+
+@keyframes hero-entrar {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.hero-atraso-1 { --atraso: 0.12s; }
+.hero-atraso-2 { --atraso: 0.24s; }
+.hero-atraso-3 { --atraso: 0.36s; }
+.hero-atraso-4 { --atraso: 0.48s; }
+
+.hero-visual.hero-entrada {
+    animation-name: hero-entrar-visual;
+}
+
+@keyframes hero-entrar-visual {
+    from { opacity: 0; transform: translateY(24px) scale(0.96); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ===== Celular e tablet ===== */
+@media (max-width: 860px) {
+    .hero {
+        grid-template-columns: 1fr;
+        padding: 2.4rem 1.6rem;
+        text-align: center;
+        min-height: 0;
+    }
+
+    .hero-texto {
+        margin: 0 auto;
+    }
+
+    .hero-acoes,
+    .hero-numeros {
+        justify-content: center;
+    }
+
+    .hero-visual {
+        max-width: 340px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero {
+        padding: 2rem 1.1rem;
+        border-radius: 14px;
+    }
+
+    .hero-cta {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .hero-numeros {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+
+    .hero-folha {
+        width: 70%;
+        right: 0;
+    }
+
+    .hero-carimbo {
+        width: 3.4rem;
+        height: 3.4rem;
+        top: -1.6rem;
+        right: -0.6rem;
+    }
+
+    .hero-carimbo strong {
+        font-size: 1rem;
+    }
+}
+
+/* ===== Menos movimento: quem pede, recebe tudo parado ===== */
+@media (prefers-reduced-motion: reduce) {
+    .hero,
+    .hero-imagem,
+    .hero-selo::before,
+    .hero-entrada,
+    .hero-carimbo.carimbar {
+        animation: none;
+    }
+
+    .hero-destaque::after {
+        animation: none;
+        transform: scaleX(1);
+    }
+
+    .hero-cta,
+    .hero-cta .hero-seta,
+    .hero-folha {
+        transition: none;
+    }
+
+    .hero-folha-texto.escrevendo::after {
+        content: none;
+    }
+}

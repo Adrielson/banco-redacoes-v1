@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Banco de Redações CEJOL</title>
     <link rel="stylesheet" href="style.css">
+    <!-- EXPERIMENTO: Hero Section (só nesta página) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&display=swap">
+    <link rel="stylesheet" href="hero.css">
 </head>
 <body>
     <div class="container">
@@ -15,11 +20,38 @@
             <a href="enviar.html" class="btn-enviar">Enviar minha redação</a>
         </nav>
 
-        <!-- ===== CABEÇALHO ===== -->
-        <header>
-            <h1>Banco de Redações CEJOL</h1>
-            <p>Consulte redações aprovadas e inspire-se para a sua próxima prova</p>
-        </header>
+        <!-- ===== HERO (EXPERIMENTO: substitui o cabeçalho; estilo no hero.css, efeitos no hero.js) ===== -->
+        <section class="hero" aria-labelledby="hero-titulo">
+            <canvas class="hero-fundo" aria-hidden="true"></canvas>
+
+            <div class="hero-conteudo">
+                <p class="hero-selo hero-entrada">Banco de Redações CEJOL</p>
+                <h1 id="hero-titulo" class="hero-titulo hero-entrada hero-atraso-1">
+                    Toda redação conta uma história. <span class="hero-destaque">Publique a sua.</span>
+                </h1>
+                <p class="hero-texto hero-entrada hero-atraso-2">
+                    Leia redações corrigidas pelos professores do CEJOL, com nota e comentários,
+                    inspire-se para a sua próxima prova e envie o seu texto para a moderação.
+                </p>
+                <div class="hero-acoes hero-entrada hero-atraso-3">
+                    <a href="enviar.html" class="hero-cta hero-cta-principal">Enviar minha redação <span class="hero-seta" aria-hidden="true">→</span></a>
+                    <a href="#listagem" class="hero-cta hero-cta-secundario">Ler redações <span class="hero-seta" aria-hidden="true">↓</span></a>
+                </div>
+                <ul class="hero-numeros hero-entrada hero-atraso-4">
+                    <li><strong data-hero-total>2</strong> redações publicadas</li>
+                    <li><strong>0 a 1000</strong> nota, como no ENEM</li>
+                </ul>
+            </div>
+
+            <div class="hero-visual hero-entrada hero-atraso-2">
+                <img class="hero-imagem" src="img/hero-escrita.svg" alt="Ilustração de livros, um caderno aberto e um lápis escrevendo" width="420" height="380">
+                <div class="hero-folha" aria-hidden="true">
+                    <p class="hero-folha-topo">FOLHA DE REDAÇÃO</p>
+                    <p class="hero-folha-texto">No ensaio “O direito à literatura”, Antonio Candido defende o acesso à leitura como parte da formação humana.</p>
+                    <p class="hero-carimbo"><span>Nota</span><strong>960</strong></p>
+                </div>
+            </div>
+        </section>
 
         <!-- ===== ESTATÍSTICAS (preenchida pelo publico.js) ===== -->
         <section id="estatisticas">
@@ -77,5 +109,6 @@
     </div>
 
     <script src="publico.js"></script>
+    <script src="hero.js"></script>
 </body>
 </html>

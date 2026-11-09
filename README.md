@@ -21,18 +21,14 @@ o JavaScript conversando com a API e a API em Python (Flask) com os dados em mem
 Enquanto a redação não é corrigida, a nota aparece como "ainda não avaliada". Quando a nota é
 **menor que 700**, as páginas públicas mostram o candidato como **"Anônimo"**.
 
-## Experimento: Hero Section (branch `experimento-hero`)
+## Página inicial: Hero Section (Aula 21)
 
-Nesta branch, a página inicial ganhou uma **Hero Section** no lugar do cabeçalho simples: fundo com
-gradiente animado e partículas de letras que reagem ao mouse, ilustração (`img/hero-escrita.svg`),
-uma folha de redação que "se escreve" sozinha, chamadas para ação e o número de redações publicadas.
-
-- Tudo está em arquivos próprios, carregados **só** pelo `index.html`: `hero.css` e `hero.js`.
-  O `style.css`, o `publico.js` e as outras páginas não mudaram.
-- Com a opção do sistema **"reduzir movimento"** ligada, a Hero aparece parada, com o texto pronto.
-- Sem JavaScript, o conteúdo aparece normalmente (só sem os efeitos).
-- **Para comparar:** `git checkout main` (original) e `git checkout experimento-hero` (com a Hero).
-- **Para desfazer:** basta continuar na `main`. Para adotar, junte a branch à `main` (merge).
+A página inicial abre com uma **Hero Section**: fundo com gradiente animado e partículas de letras
+que reagem ao mouse, a ilustração `img/hero-escrita.svg`, uma folha de redação que "se escreve"
+sozinha e os botões "Enviar minha redação" e "Ler redações". O estilo e os efeitos ficam em
+`hero.css` e `hero.js`, carregados **só** pelo `index.html`. Com a opção do sistema **"reduzir
+movimento"** ligada, tudo aparece parado; sem JavaScript, o conteúdo aparece normalmente.
+O passo a passo está na Aula 21 (aula extra).
 
 ## Arquivos
 

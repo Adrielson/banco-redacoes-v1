@@ -1,11 +1,10 @@
 /* ==========================================================
-   Banco de Redações CEJOL — hero.css  (EXPERIMENTO)
-   Hero Section da página inicial. Carregado só pelo index.html,
-   depois do style.css: as outras páginas não mudam.
-   Para desfazer o experimento: voltar para a branch main.
+   Banco de Redações CEJOL — hero.css
+   A Hero Section da página inicial (Aula 21). Carregado só pelo
+   index.html, depois do style.css: as outras páginas não mudam.
    ========================================================== */
 
-/* ===== Cores do experimento (as mesmas do projeto, mais escuras no fundo) ===== */
+/* ===== Cores da Hero (as mesmas do projeto, mais escuras no fundo) ===== */
 .hero {
     --hero-fundo-1: #1e1b4b;      /* azul-noite */
     --hero-fundo-2: #3b2f86;      /* o roxo do projeto, escurecido */

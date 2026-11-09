@@ -1,5 +1,5 @@
 // ==========================================================
-// Banco de Redações CEJOL — hero.js  (EXPERIMENTO)
+// Banco de Redações CEJOL — hero.js (Aula 21)
 // Efeitos da Hero Section do index.html: partículas de letras no fundo,
 // luz que segue o mouse, folha de redação que "se escreve" sozinha e o
 // número de redações publicadas contando até o valor que veio da API.

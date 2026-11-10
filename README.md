@@ -15,7 +15,7 @@ o JavaScript conversando com a API e a API em Python (Flask) com os dados em mem
 | Visitante | `redacao.html?id=1` | ler uma redação aprovada, com a nota e os comentários dos professores |
 | Candidato | `enviar.html` | enviar uma redação (o título é opcional), que entra como "aguardando" e sem nota |
 | Administrador | `admin.html` | entrar com a senha; ver as estatísticas; aprovar, recusar, adicionar, editar (inclusive a **nota**, e com um comentário opcional), comentar e excluir |
-| Administrador | `moderar.html?id=3` | ler uma redação, dar a nota, escrever um comentário e decidir: aprovar ou recusar (a nota e o comentário são salvos junto com a decisão) |
+| Administrador | `moderar.html?id=3` | ler uma redação, dar a nota, escrever um comentário e decidir: aprovar ou recusar (a nota e o comentário são salvos junto com a decisão); **editar ou excluir** os comentários de qualquer redação |
 
 **Nota e anonimato:** a nota vai de 0 a 1000, como no ENEM, e é dada no painel do administrador.
 Enquanto a redação não é corrigida, a nota aparece como "ainda não avaliada". Quando a nota é

@@ -272,6 +272,49 @@ def comentar_redacao(id):
     return jsonify(comentario), 201
 
 
+# ===== Comentários: alterar e excluir um comentário =====
+
+# Procura o comentário dentro da redação; devolve None se não existir
+def buscar_comentario(redacao, comentario_id):
+    for comentario in redacao["comentarios"]:
+        if comentario["id"] == comentario_id:
+            return comentario
+    return None
+
+
+@app.route("/redacoes/<int:id>/comentarios/<int:comentario_id>", methods=["PUT"])
+def alterar_comentario(id, comentario_id):
+    redacao = buscar_redacao(id)
+    if redacao is None:
+        return jsonify({"erro": "Redação não encontrada"}), 404
+    comentario = buscar_comentario(redacao, comentario_id)
+    if comentario is None:
+        return jsonify({"erro": "Comentário não encontrado"}), 404
+
+    # Só muda o autor e o texto que vieram; nenhum dos dois pode ficar vazio
+    dados = request.get_json()
+    for campo in ["autor", "texto"]:
+        if campo in dados:
+            if not dados[campo]:
+                return jsonify({"erro": f"O campo {campo} não pode ficar vazio"}), 400
+            comentario[campo] = dados[campo]
+
+    return jsonify(comentario)
+
+
+@app.route("/redacoes/<int:id>/comentarios/<int:comentario_id>", methods=["DELETE"])
+def excluir_comentario(id, comentario_id):
+    redacao = buscar_redacao(id)
+    if redacao is None:
+        return jsonify({"erro": "Redação não encontrada"}), 404
+    comentario = buscar_comentario(redacao, comentario_id)
+    if comentario is None:
+        return jsonify({"erro": "Comentário não encontrado"}), 404
+
+    redacao["comentarios"].remove(comentario)
+    return jsonify({"mensagem": "Comentário excluído"})
+
+
 # ===== Início: liga o servidor =====
 if __name__ == "__main__":
     app.run(debug=True, port=5000)

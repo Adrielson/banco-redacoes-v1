@@ -161,21 +161,6 @@ function desenharRedacao(redacao) {
         decisaoHTML = `<p class="texto-vazio">Esta redação já foi decidida. <a href="admin.html">Voltar ao painel</a></p>`;
     }
 
-    let comentariosHTML = "";
-    redacao.comentarios.forEach(function (c) {
-        comentariosHTML += `
-            <div class="comentario">
-                <span class="autor">${escaparHTML(c.autor)}</span>
-                <span class="data">${escaparHTML(c.data)}</span>
-                <p class="texto">${escaparHTML(c.texto)}</p>
-            </div>
-        `;
-    });
-
-    if (comentariosHTML === "") {
-        comentariosHTML = `<p class="texto-vazio">Ainda não há comentários para esta redação.</p>`;
-    }
-
     document.getElementById("conteudo-moderacao").innerHTML = `
         <section class="leitura-bloco">
             <h2>${escaparHTML(tituloDaRedacao(redacao))}</h2>
@@ -188,11 +173,102 @@ function desenharRedacao(redacao) {
 
         ${decisaoHTML}
 
-        <section class="comentarios-bloco">
-            <h3>💬 Comentários dos professores</h3>
-            ${comentariosHTML}
-        </section>
+        <section class="comentarios-bloco" id="comentarios"></section>
     `;
+    desenharComentarios(redacao);
+}
+
+// ===== Comentários: listar, editar e excluir =====
+
+// A redação que está na tela (para achar o comentário que vai ser editado)
+let redacaoAtual = null;
+
+// Desenha só a área dos comentários, cada um com "Editar" e "Excluir"
+function desenharComentarios(redacao) {
+    redacaoAtual = redacao;
+
+    let comentariosHTML = "";
+    redacao.comentarios.forEach(function (c) {
+        comentariosHTML += `
+            <div class="comentario" id="comentario-${c.id}">
+                <span class="autor">${escaparHTML(c.autor)}</span>
+                <span class="data">${escaparHTML(c.data)}</span>
+                <p class="texto">${escaparHTML(c.texto)}</p>
+                <div class="botoes-redacao">
+                    <button type="button" class="editar" data-acao="editar-comentario" data-id="${redacao.id}" data-comentario="${c.id}">Editar</button>
+                    <button type="button" class="excluir" data-acao="excluir-comentario" data-id="${redacao.id}" data-comentario="${c.id}">Excluir</button>
+                </div>
+            </div>
+        `;
+    });
+
+    if (comentariosHTML === "") {
+        comentariosHTML = `<p class="texto-vazio">Ainda não há comentários para esta redação.</p>`;
+    }
+
+    document.getElementById("comentarios").innerHTML = `
+        <h3>💬 Comentários dos professores</h3>
+        ${comentariosHTML}
+    `;
+}
+
+// Pede a redação de novo à API e redesenha só os comentários
+async function atualizarComentarios(id) {
+    let redacao = await pedirAPI("GET", "/redacoes/" + id);
+    desenharComentarios(redacao);
+}
+
+// Troca o comentário por um pequeno formulário, já preenchido
+function abrirEdicaoComentario(id, comentarioId) {
+    let comentario = redacaoAtual.comentarios.find(c => c.id === comentarioId);
+    let caixa = document.getElementById("comentario-" + comentarioId);
+
+    caixa.innerHTML = `
+        <div class="campo">
+            <label for="autor-comentario-${comentarioId}">Professor revisor</label>
+            <input type="text" id="autor-comentario-${comentarioId}">
+        </div>
+        <div class="campo">
+            <label for="texto-comentario-${comentarioId}">Comentário</label>
+            <textarea id="texto-comentario-${comentarioId}"></textarea>
+        </div>
+        <div class="botoes-redacao">
+            <button type="button" class="aprovar" data-acao="salvar-comentario" data-id="${id}" data-comentario="${comentarioId}">Salvar comentário</button>
+            <button type="button" class="ler" data-acao="cancelar-comentario">Cancelar</button>
+        </div>
+    `;
+    // Os valores entram pelo .value: assim, aspas ou "<" no texto não quebram o HTML
+    document.getElementById("autor-comentario-" + comentarioId).value = comentario.autor;
+    document.getElementById("texto-comentario-" + comentarioId).value = comentario.texto;
+}
+
+async function salvarComentarioEditado(id, comentarioId) {
+    let dados = {
+        autor: document.getElementById("autor-comentario-" + comentarioId).value.trim(),
+        texto: document.getElementById("texto-comentario-" + comentarioId).value.trim()
+    };
+    if (!dados.autor || !dados.texto) {
+        mostrarMensagem("mensagem-erro", "❌ O nome do professor e o comentário não podem ficar vazios.");
+        return;
+    }
+
+    try {
+        await pedirAPI("PUT", "/redacoes/" + id + "/comentarios/" + comentarioId, dados);
+        await atualizarComentarios(id);
+        mostrarMensagem("mensagem-sucesso", "✅ Comentário atualizado!");
+    } catch (erro) {
+        mostrarMensagem("mensagem-erro", "❌ " + erro.message);
+    }
+}
+
+async function excluirComentario(id, comentarioId) {
+    try {
+        await pedirAPI("DELETE", "/redacoes/" + id + "/comentarios/" + comentarioId);
+        await atualizarComentarios(id);
+        mostrarMensagem("mensagem-sucesso", "Comentário excluído.");
+    } catch (erro) {
+        mostrarMensagem("mensagem-erro", "❌ " + erro.message);
+    }
 }
 
 // ===== Aprovar ou recusar =====
@@ -247,6 +323,21 @@ function tratarClique(event) {
     }
     if (acao === "recusar" && confirm("Tem certeza que deseja RECUSAR esta redação?")) {
         decidir(id, "recusada");
+    }
+
+    // Os botões dos comentários
+    let comentarioId = parseInt(botao.dataset.comentario);
+    if (acao === "editar-comentario") {
+        abrirEdicaoComentario(id, comentarioId);
+    }
+    if (acao === "salvar-comentario") {
+        salvarComentarioEditado(id, comentarioId);
+    }
+    if (acao === "cancelar-comentario") {
+        desenharComentarios(redacaoAtual);
+    }
+    if (acao === "excluir-comentario" && confirm("Tem certeza que deseja EXCLUIR este comentário?")) {
+        excluirComentario(id, comentarioId);
     }
 }
 

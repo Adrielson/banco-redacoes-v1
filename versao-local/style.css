@@ -295,19 +295,6 @@ footer a:hover {
     text-decoration: underline;
 }
 
-.link-admin {
-    margin-top: 0.8rem;
-}
-
-.link-admin-texto {
-    font-size: 0.85rem;
-    color: #b0b0b0;
-}
-
-.link-admin-texto:hover {
-    color: #7f8c8d;
-}
-
 /* ############ Aula 7 ############ */
 
 /* ===== Caixas de formulário (enviar.html e, depois, admin.html) ===== */

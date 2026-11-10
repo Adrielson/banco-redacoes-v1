@@ -425,6 +425,20 @@ footer a:hover {
     margin-bottom: 1.5rem;
 }
 
+/* No painel e na moderação, a mensagem flutua no alto da tela:
+   aparece onde a pessoa estiver, sem a página voltar para o topo */
+.mensagem-flutuante {
+    position: fixed;
+    top: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 2rem);
+    max-width: 600px;
+    margin-bottom: 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    z-index: 1001;
+}
+
 /* ############ Aula 8 ############ */
 
 /* ===== Leitura: a folha de redação (redacao.html e moderar.html) ===== */

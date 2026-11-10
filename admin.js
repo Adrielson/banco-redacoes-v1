@@ -68,13 +68,21 @@ function compararPorNota(a, b) {
     return a.id - b.id;
 }
 
-// Mostra uma mensagem (sucesso ou erro) que some sozinha depois de 3 segundos
+// Mostra uma mensagem (sucesso ou erro) que flutua no alto da tela e some
+// sozinha depois de 3 segundos. A página fica onde está: não volta para o topo.
+let temporizadorMensagem = null;
 function mostrarMensagem(id, texto) {
+    // Só uma mensagem por vez: esconde as duas e mostra a pedida
+    esconder(document.getElementById("mensagem-sucesso"));
+    esconder(document.getElementById("mensagem-erro"));
+
     let mensagem = document.getElementById(id);
     mensagem.textContent = texto;
     mostrar(mensagem);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    setTimeout(function () {
+
+    // Uma mensagem nova recomeça a contagem dos 3 segundos
+    clearTimeout(temporizadorMensagem);
+    temporizadorMensagem = setTimeout(function () {
         esconder(mensagem);
     }, 3000);
 }

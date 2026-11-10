@@ -64,12 +64,23 @@ function textoEmParagrafos(texto) {
     return html;
 }
 
-// Mostra uma mensagem (sucesso ou erro) no alto da página
+// Mostra uma mensagem (sucesso ou erro) que flutua no alto da tela e some
+// sozinha depois de 3 segundos. A página fica onde está: não volta para o topo.
+let temporizadorMensagem = null;
 function mostrarMensagem(id, texto) {
+    // Só uma mensagem por vez: esconde as duas e mostra a pedida
+    esconder(document.getElementById("mensagem-sucesso"));
+    esconder(document.getElementById("mensagem-erro"));
+
     let mensagem = document.getElementById(id);
     mensagem.textContent = texto;
     mostrar(mensagem);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+
+    // Uma mensagem nova recomeça a contagem dos 3 segundos
+    clearTimeout(temporizadorMensagem);
+    temporizadorMensagem = setTimeout(function () {
+        esconder(mensagem);
+    }, 3000);
 }
 
 // Para cada status: o texto que aparece na tela e a classe CSS da cor
@@ -113,8 +124,7 @@ async function carregarRedacao() {
     let id = params.get("id");
 
     if (!id) {
-        container.innerHTML = "";
-        mostrarMensagem("mensagem-erro", "❌ Nenhuma redação foi indicada no endereço.");
+        container.innerHTML = `<p class="mensagem-erro">❌ Nenhuma redação foi indicada no endereço.</p>`;
         return;
     }
 
@@ -122,8 +132,7 @@ async function carregarRedacao() {
         let redacao = await pedirAPI("GET", "/redacoes/" + id);
         desenharRedacao(redacao);
     } catch (erro) {
-        container.innerHTML = "";
-        mostrarMensagem("mensagem-erro", "❌ " + erro.message);
+        container.innerHTML = `<p class="mensagem-erro">❌ ${escaparHTML(erro.message)}</p>`;
     }
 }
 

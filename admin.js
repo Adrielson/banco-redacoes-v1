@@ -57,6 +57,17 @@ function notaValida(nota) {
     return nota === null || (Number.isInteger(nota) && nota >= 0 && nota <= 1000);
 }
 
+// A ordem das listas: a maior nota primeiro; com a mesma nota (ou sem nota),
+// a que chegou antes (o id menor). As redações sem nota ficam no fim.
+function compararPorNota(a, b) {
+    let notaA = (a.nota === null || a.nota === undefined) ? -1 : a.nota;
+    let notaB = (b.nota === null || b.nota === undefined) ? -1 : b.nota;
+    if (notaA !== notaB) {
+        return notaB - notaA;
+    }
+    return a.id - b.id;
+}
+
 // Mostra uma mensagem (sucesso ou erro) que some sozinha depois de 3 segundos
 function mostrarMensagem(id, texto) {
     let mensagem = document.getElementById(id);
@@ -143,6 +154,7 @@ function sair(event) {
 
 // ===== Painel: estatísticas e listas =====
 function atualizarPainel() {
+    redacoes.sort(compararPorNota);     // as listas ficam na ordem das notas
     atualizarEstatisticas();
     renderizarModeracao();
     renderizarListaCompleta();

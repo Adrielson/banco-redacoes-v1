@@ -52,6 +52,17 @@ function nomePublico(redacao) {
     return redacao.candidato;
 }
 
+// A ordem das listas: a maior nota primeiro; com a mesma nota (ou sem nota),
+// a que chegou antes (o id menor). As redações sem nota ficam no fim.
+function compararPorNota(a, b) {
+    let notaA = (a.nota === null || a.nota === undefined) ? -1 : a.nota;
+    let notaB = (b.nota === null || b.nota === undefined) ? -1 : b.nota;
+    if (notaA !== notaB) {
+        return notaB - notaA;
+    }
+    return a.id - b.id;
+}
+
 // ===== index.html: lista e busca =====
 
 // As redações aprovadas, que chegam da API (a lista começa vazia)
@@ -60,6 +71,7 @@ let redacoesPublicas = [];
 function renderizarCards(lista, mensagemSeVazia) {
     let container = document.getElementById("lista-redacoes");
     container.innerHTML = "";                       // apaga os cards de exemplo
+    lista.sort(compararPorNota);                    // a maior nota primeiro
 
     if (lista.length === 0) {
         container.innerHTML = `<p class="texto-vazio">${mensagemSeVazia}</p>`;
